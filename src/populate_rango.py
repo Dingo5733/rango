@@ -27,7 +27,7 @@ def populate():
          "url":"http://bottlepy.org/docs/dev/"},
         {"title":"Flask",
          "url":"http://flask.pocoo.org"} ]
-    cats = {"Python": {"pages": python_pages},
+    cats = {"Python": {"pages": python_pages,},
             "Django": {"pages": django_pages},
             "Other Frameworks": {"pages": other_pages}}
 
@@ -44,8 +44,9 @@ def populate():
             add_page(c, p["title"], p["url"])
     # Print out the categories we have added.
     for c in Category.objects.all():
+        print ("{}: {} likes AND {} views".format(c.name,c.likes, c.views))
         for p in Page.objects.filter(category=c):
-            print("- {0} - {1}".format(str(c), str(p)))
+            print("- {0} - {1} ".format(str(c), str(p)))
 
 def add_page(cat, title, url, views=0):
     p = Page.objects.get_or_create(category=cat, title=title)[0]
@@ -56,6 +57,15 @@ def add_page(cat, title, url, views=0):
 
 def add_cat(name):
     c = Category.objects.get_or_create(name=name)[0]
+    if c.name == 'Python':
+        c.likes = 64
+        c.views = 128
+    elif c.name == 'Django':
+        c.likes = 32
+        c.views = 64
+    else:
+        c.likes = 16
+        c.views = 32
     c.save()
     return c
 
