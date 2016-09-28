@@ -4,3 +4,4 @@
 .DS_Store
 .Python
 pip-selfcheck.json
+src/db.sqlite3
