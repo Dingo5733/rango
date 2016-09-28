@@ -3,4 +3,10 @@ from django.shortcuts import render
 
 # Create your views here.
 def index(request):
-    return HttpResponse("Rango says hey there partner!")
+    context = {
+        'boldmessage': "Crunchy, creamy, cookies, candy, cupcake!"
+    }
+    return render(request, 'rango/index.html', context)
+
+def about(request):
+    return HttpResponse("Rango says here is the about page <a href='/rango/'> Home </a>")
