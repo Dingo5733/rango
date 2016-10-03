@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     #######################
     ### Vendor Apps
     #######################
+    'bcrypt',
 
 
     #######################
@@ -95,6 +96,14 @@ DATABASES = {
     }
 }
 
+# Password Hashers
+
+PASSWORD_HASHERS = [
+        'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
+        'django.contrib.auth.hashers.BCryptPasswordHasher',
+        'django.contrib.auth.hashers.PBKDF2PasswordHasher',
+        'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
+]
 
 # Password validation
 # https://docs.djangoproject.com/en/1.9/ref/settings/#auth-password-validators
@@ -113,6 +122,7 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
 
 
 # Internationalization
@@ -139,3 +149,6 @@ STATICFILES_DIRS = (
 # Media Files uploaded from Rango
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
+# Login Url Redirect for Login Required Wrapper
+LOGIN_URL = '/rango/login/'
