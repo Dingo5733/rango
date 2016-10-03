@@ -1,3 +1,10 @@
+########################
+#### IMPORTS
+########################
+
+from datetime import (
+    datetime,
+)
 
 from django.contrib.auth import (
     authenticate,
@@ -34,8 +41,41 @@ from rango.models import (
     Page,
 )
 
+########################
+#### Helper Functions
+########################
+
+def visitor_cookie_handler(request, response):
+    # Get the number of visits to the ite.
+    # We use the COOKIES.get() function to obtains the visits cookie.
+    # If the cookie exists, the value returned is casted to an integer.
+    # If the cookie doesn't exist, then default values of 1 is used.
+
+    visits = int(request.COOKIES.get('visits', '1'))
+
+    last_visit_cookie = request.COOKIES.get('last_visit', str(datetime.now()))
+    last_visit_time = datetime.strptime(last_visit_cookie[:-7],
+                                        '%Y-%m-%d %H:%M:%S')
+
+    # If it's been bore than a day since last visit...
+    if (datetime.now() - last_visit_time).days > 0:
+        visits = visits + 1
+        #update the last visit cookie now that we have updated the count
+        response.set_cookie('last_visit', str(datetime.now()))
+    else:
+        # set the last visit cookie
+        response.set_cookie('last_visit', last_visit_cookie)
+
+    # Update/set the visits cookie
+    response.set_cookie('visits', visits)
+
+########################
+#### Views
+########################
+
 # Create your views here.
 def index(request):
+
     # Query the database for a list of all categories stored
     # Order the categories by no. like in descending Order
     # Retrieve the Top 5 only, or all if less than 5
@@ -52,9 +92,17 @@ def index(request):
         'hello_message':'Rango says',
         'title': title,
     }
-    return render(request, 'rango/index.html', context)
+
+    # Obtain our response object early so we add the cookie information.
+    response = render(request, 'rango/index.html', context)
+
+    # Call the function to handle the cookies.
+    visitor_cookie_handler(request, response)
+
+    return response
 
 def about(request):
+
     title = 'About'
     context = {
         'title': title,
