@@ -102,11 +102,12 @@ def index(request):
     return response
 
 def about(request):
-
+    visits = request.COOKIES['visits']
     title = 'About'
     context = {
         'title': title,
-        'create_message' : 'This tutorial has been put together by'
+        'visits': visits,
+        'create_message' : 'This tutorial has been put together by',
     }
 
     return render(request, 'rango/about.html', context)
