@@ -5,3 +5,4 @@
 .Python
 pip-selfcheck.json
 src/db.sqlite3
+src/rango/bing.key
