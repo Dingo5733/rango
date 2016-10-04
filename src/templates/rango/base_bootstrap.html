@@ -45,18 +45,20 @@
             <a class="nav-item nav-link" href="{% url 'auth_login'%}">Login</a>
           {% endif %}
         </nav>
+        <form class="pull-xs-right">
+          <input type="text" class="form-control" placeholder="Search...">
+        </form>
       </div>
     </nav>
 
-    <div class="container">
+    <div class="container-fluid">
       <div class="row">
-        <!-- <div class="col-sm-3 col-md-2 sidebar">
+        <div class="col-sm-3 col-md-2 sidebar">
           {% block sidebar_block %}
             {% get_category_list category %}
           {% endblock %}
-        </div> -->
-        <!-- <div class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 main"> -->
-        <div>
+        </div>
+        <div class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 main">
           {% block content %}
 
           {% endblock %}

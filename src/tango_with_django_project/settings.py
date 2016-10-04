@@ -45,6 +45,8 @@ INSTALLED_APPS = [
     ### Vendor Apps
     #######################
     'bcrypt',
+    'registration',
+    'bootstrap_toolkit',
 
 
     #######################
@@ -52,6 +54,22 @@ INSTALLED_APPS = [
     #######################
     'rango',
 ]
+
+###################################
+### Registration Redux Config
+###################################
+
+# If True, user can register
+REGISTRATION_OPEN = True
+# One-week activation window, can use a different value
+ACCOUNT_ACTIVATION_DAYS = 7
+# If True, the user will automatically be logged in.
+REGISTRATION_AUTO_LOGIN = True
+# The page users arrive at after they successfully login.
+LOGIN_REDIRECT_URL = '/rango/'
+# The page users are directed if they are not logged in.
+# and are trying to access pages requiring login
+LOGIN_URL = '/accounts/login/'
 
 MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',

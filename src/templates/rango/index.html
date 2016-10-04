@@ -1,68 +1,47 @@
+{% extends 'rango/base.html' %}
 {% load staticfiles %}
-
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{title }}</title>
-
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
-      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-  </head>
-  <body>
-    <div class="container">
-      <header>
-        {% if user.is_authenticated %}
-          <h3>howdy {{ user.username }}</h3>
+{% block title %}
+  Index
+{% endblock %}
+{% block content %}
+  <div class="jumbotron">
+    <h1 class="display-3">Rango says...</h1>
+    {% if user.is_authenticated %}
+      <h1>Hey there {{ user.username }}</h1>
+    {% else %}
+      <h1> Hey there partner </h1>
+    {% endif %}
+  </div>
+  <div class="row marketing">
+    <div class="col-md-6">
+      <h4>Most liked categories </h4>
+      <p>
+        {% if categories %}
+        <ul class="list-group">
+          {% for category in categories %}
+            <li class="list-group-item"><a href="{% url 'show_category' category.slug %}">{{ category.name }}</a></li>
+          {% endfor %}
+        </ul>
         {% else %}
-          hey there partner!
+          <strong> There are no categories present </strong>
         {% endif %}
-      </header>
-      <div class="row">
-
-        <div class="col-md-6 col-md-offset-3">
-          <h1>{{hello_message }}</h1>
-          <p> Hey there partner
-            <br>
-            <strong> {{ boldmessage }} </strong>
-          </p>
-          <a href="{% url 'about' %}"> About Rango </a><br>
-          <a href="/rango/add_category"> New Category</a><br>
-          <img src="{% static 'images/rango.jpg' %}" alt="Image of Rango" class="img-responsive img-rounded" />
-          {% if categories %}
-          <h1> Most Liked Categories </h1>
-            <ul>
-              {% for category in categories %}
-                <li><a href="{% url 'show_category' category.slug %}">{{ category.name }}</a> </li>
-              {% endfor %}
-            </ul>
-          {% else %}
-            <strong> There are no categories present </strong>
-          {% endif %}
-          {% if categories %}
-          <h1> Most Viewed Pages </h1>
-            <ul>
-              {% for page in pages %}
-                <li><a href="{{ page.url }}">{{ page.title }}</a> </li>
-              {% endfor %}
-            </ul>
-          {% else %}
-            <strong> There are no pages present </strong>
-          {% endif %}
-        </div>
-      </div>
+      </p>
     </div>
+    <div class="col-md-6">
+      <h4> Most Viewed Pages </h4>
+      <p>
+        {% if pages %}
+        <ul class="list-group">
+          {% for page in pages %}
+            <li class="list-group-item"><a href="{{ page.url }}">{{ page.title }}</a></li>
+          {% endfor %}
+        </ul>
+        {% else %}
+          <strong> There are no pages present </strong>
+        {% endif %}
+      </p>
+    </div>
+  </div>
+  <img src="{% static 'images/rango.jpg' %}" alt="" class="img-fluid"/>
 
-
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-  </body>
-</html>
+{% endblock %}

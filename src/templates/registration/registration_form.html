@@ -1,0 +1,17 @@
+
+
+{% extends 'rango/base.html' %}
+{% load staticfiles %}
+{% load bootstrap_toolkit %}
+{% block title %} Register {% endblock %}
+
+{% block content %}
+<form class="" id="category_form" action="." method="post">
+  <h2 class="form-signin-heading">Register</h2>
+  {% csrf_token %}
+  {{ form|as_bootstrap}}
+  <br>
+  <button class="btn btn-primary" type ="submit" name="submit">Register </button>
+</form>
+
+{% endblock %}
